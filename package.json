@@ -1,0 +1,24 @@
+{
+  "name": "dsub",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OlivierChiasson/DSUB.git"
+  },
+  "author": "Branden Brideau, Olivier Chiasson",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/OlivierChiasson/DSUB/issues"
+  },
+  "homepage": "https://github.com/OlivierChiasson/DSUB#readme",
+  "dependencies": {
+    "discord.js": "^12.5.3",
+    "lodash": "^4.17.21",
+    "ws": "^7.4.4"
+  }
+}
