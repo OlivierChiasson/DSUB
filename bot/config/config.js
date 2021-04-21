@@ -1,3 +1,4 @@
 module.exports = config = {
-    token: ''
+    token: '',
+    comamnd_prefix: '*'
 };
