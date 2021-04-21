@@ -4,6 +4,7 @@ const config = require('./config/config');
 const emoji = require('./emoji');
 const eventBus = require('./eventbus');
 const Discord = require('discord.js');
+const ws = require('./websocket');
 
 // Init Discord class.
 const client = new Discord.Client();
