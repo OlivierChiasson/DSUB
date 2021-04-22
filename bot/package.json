@@ -18,6 +18,8 @@
   "homepage": "https://github.com/OlivierChiasson/DSUB#readme",
   "dependencies": {
     "discord.js": "^12.5.3",
+    "leveldown": "^6.0.0",
+    "levelup": "^5.0.0",
     "lodash": "^4.17.21",
     "ws": "^7.4.4"
   }

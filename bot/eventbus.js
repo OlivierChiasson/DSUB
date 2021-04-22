@@ -1,4 +1,5 @@
 const EventEmitter = require('events');
+const _ = require('lodash')
 
 // EventBus class.
 class EventBus extends EventEmitter {
@@ -11,13 +12,19 @@ class EventBus extends EventEmitter {
     }
 
     discordCommandEventExists(eventName) {
-        this.eventNames().foreach((ele) => {
-            if ('discord::' + ele === eventName) {
-                return true;
+        let val = false;
+
+        this.eventNames().forEach((ele) => {
+            if (_.isEqual('discord::' + eventName, ele)) {
+                val = true;
             }
         });
 
-        return false;
+        return val;
+    }
+
+    dispatchDiscordCommandEvent(eventName, args) {
+        this.emit('discord::' + eventName, args);
     }
 
     onWsEvent(eventName, callBack) {
@@ -29,13 +36,19 @@ class EventBus extends EventEmitter {
     }
 
     wsEventExists(eventName) {
-        this.eventNames().foreach((ele) => {
-            if ('ws::' + ele === eventName) {
-                return true;
+        let val = false;
+
+        this.eventNames().forEach((ele) => {
+            if (_.isEqual('ws::' + eventName, ele)) {
+                val = true;
             }
         });
 
         return false;
+    }
+
+    dispatchWsEvent(eventName, args) {
+        this.emit('ws::' + eventName, args);
     }
 }
 

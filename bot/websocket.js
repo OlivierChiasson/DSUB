@@ -102,4 +102,4 @@ class WebSocketServer {
     }
 }
 
-module.exports.WebSocket = new WebSocketServer();
+module.exports = new WebSocketServer();
