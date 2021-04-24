@@ -33,6 +33,7 @@ class WebSocketServer {
         ws.on('message', data => {
             try {
                 let json = JSON.parse(data);
+
                 if (json.hasOwnProperty('authentication')) {
                     if (json.hasOwnProperty('username')) {
                         if (json.authentication == config.basic_ws_auth_token) {
@@ -50,8 +51,13 @@ class WebSocketServer {
                                 authentication: 'SUCCESS',
                                 error: ''
                             }));
+                        } else {
+                            ws.terminate();
                         }
+                    } else {
+                        ws.terminate();
                     }
+
                 } else {
 
                     /**
@@ -82,7 +88,7 @@ class WebSocketServer {
                     error: 'Authentication invalid.'
                 }));
                 ws.terminate();
-                console.log('ws::error::' + ex);
+                console.error('ws::error::' + ex);
             }
         });
     }
@@ -90,7 +96,11 @@ class WebSocketServer {
     // Sends a message to all authenticated ws clients.
     broadcast(json) {
         _.forEach(this.authClients, (client) => {
-            client.send(JSON.stringify(json));
+            try {
+                client.send(JSON.stringify(json));
+            } catch (ex) {
+                console.error('ws::broadcast::send::' + ex);
+            }
         });
     }
 

@@ -1,4 +1,5 @@
 const config = require('./config/config');
+const db = require('./db');
 const emoji = require('./emoji');
 
 module.exports = utils = {
@@ -29,6 +30,13 @@ module.exports = utils = {
         }
 
         return false;
+    },
+
+    // This checks with the database to make sure that the reaction wasn't added by a user.
+    isReactionFromOriginalPost(reaction) {
+        //TODO
+
+        return true;
     },
 
     // Gets a user's nickname in Discord.

@@ -1,7 +1,7 @@
 // Main imports.
-const Lodash = require('lodash');
+const _ = require('lodash');
 const config = require('./config/config');
-const emoji = require('./emoji');
+const emoji = require('./enum/emoji');
 const utils = require('./utils');
 const eventBus = require('./eventbus');
 const Discord = require('discord.js');
@@ -46,7 +46,9 @@ client.on('message', (msg) => {
 client.on('messageReactionAdd', (reaction, user) => {
     // Check to make sure the reaction is in our emoji list.
     if (utils.isValidReaction(reaction)) {
-        
+        if (utils.isReactionFromOriginalPost(reaction)) {
+
+        }
     }
 });
 
@@ -56,7 +58,9 @@ client.on('messageReactionAdd', (reaction, user) => {
  client.on('messageReactionRemove', (reaction, user) => {
     // Check to make sure the reaction is in our emoji list.
     if (utils.isValidReaction(reaction)) {
-        
+        if (utils.isReactionFromOriginalPost(reaction)) {
+            
+        }
     }
 });
 
@@ -153,7 +157,7 @@ client.on('messageReactionAdd', (reaction, user) => {
         'Veuillez sélectionner une des options avec les réactions ci-dessous.', 
         utils.getUserNickName(msg), 
         new Date().toLocaleDateString(), 
-        [emoji.letter_check, emoji.letter_cross]
+        [emoji.check, emoji.cross]
     );
 
     // TODO: Handle database save, ws event.
@@ -171,7 +175,7 @@ client.on('messageReactionAdd', (reaction, user) => {
         'Appuyer sur la réaction ci-dessous pour lever votre main!', 
         utils.getUserNickName(msg), 
         new Date().toLocaleDateString(), 
-        [emoji.letter_hand_up]
+        [emoji.hand_up]
     );
 
     // TODO: Handle database save, ws event.
