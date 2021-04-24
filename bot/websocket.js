@@ -1,5 +1,6 @@
 const WebSocket = require('ws');
 const config = require('./config/config');
+const eventBus = require('./eventbus');
 const _ = require('lodash');
 
 let authClients = [];
@@ -12,27 +13,104 @@ class WebSocketServer {
         });
 
         // Register our on connection event for the server.
-        this.ws.on('connection', this.onConnection);
+        this.ws.on('connection', this._onConnection);
 
         // Event registers.
         handlers = {
             event: {
-
+                // Create message event from websocket.
+                // This would be one of the default messages chosen.
+                // Message example:
+                /**
+                 * {
+                 *    type: 'event',
+                 *    id: 'unique_id_for_this_request',
+                 *    name: 'CREATE_DEFAULT_MESSAGE',
+                 *    from: 'bobby/michel/dominique',
+                 *    message: {
+                 *       type: 'one of the types from ./enum/messagetypes.js'
+                 *    },
+                 *     channel: 'id_of_channel'
+                 * }
+                 */
+                CREATE_DEFAULT_MESSAGE: () => {
+                    if (eventBus.wsEventExists(this.name)) {
+                        eventBus.dispatchWsEvent(this.name, this);
+                    }
+                },
+                // Create message event from websocket.
+                // This would be a custom message messages chosen.
+                // Message example:
+                /**
+                 * {
+                 *    type: 'event',
+                 *    id: 'unique_id_for_this_request',
+                 *    name: 'CREATE_DEFAULT_MESSAGE',
+                 *    from: 'bobby/michel/dominique',
+                 *    message: {
+                 *       type: 'custom',
+                 *       title: 'title here',
+                 *       desciption: 'description',
+                 *       emojis: ['letter_a', 'letter_b', 'etc'] // Same as emoji.js, with the key names.
+                 *    },
+                 *    channel: 'id_of_channel'
+                 * }
+                 */
+                 CREATE_CUSTOM_MESSAGE: () => {
+                    if (eventBus.wsEventExists(this.name)) {
+                        eventBus.dispatchWsEvent(this.name, this);
+                    }
+                }
             },
             listeners: {
 
             },
             requests: {
-
+                // Request from the ws to get groups with their users.
+                // Message example:
+                /**
+                 * {
+                 *    type: 'requests',
+                 *    id: 'unique_id_for_this_request',
+                 *    name: 'GET_GROUPS_WITH_USERS',
+                 *    from: 'bobby/michel/dominique',
+                 * }
+                 */
+                // Reply example:
+                /**
+                 * {
+                 *    type: 'reply',
+                 *    id: 'unique_id_from_request',
+                 *    groups: [
+                 *      
+                 *    ],
+                 *    users: [
+                 *        {
+                 *            username: '',
+                 *            group: ''
+                 *        }
+                 *    ],
+                 *    channels: [
+                 * 
+                 *    ]
+                 * }
+                 */
+                GET_GROUPS_WITH_USERS_AND_CHANNELS: () => {
+                    if (eventBus.wsEventExists(this.name)) {
+                        eventBus.dispatchWsEvent(this.name, this);
+                    }
+                }
             }
         };
     }
 
     // Called when a new client connects to the websocket.
-    onConnection(ws) {
+    _onConnection(ws) {
         ws.on('message', data => {
             try {
                 let json = JSON.parse(data);
+
+                console.log('ws::message::' + json);
 
                 if (json.hasOwnProperty('authentication')) {
                     if (json.hasOwnProperty('username')) {

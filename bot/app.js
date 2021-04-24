@@ -89,7 +89,12 @@ client.on('messageReactionAdd', (reaction, user) => {
             embedMessage.react(emojiArray[i]);
         }
     });
-}
+};
+
+// TODO: Make this save to the database.
+const savePost = (json) => {
+
+};
 
 /**
  * Discord command event.
@@ -179,6 +184,29 @@ client.on('messageReactionAdd', (reaction, user) => {
     );
 
     // TODO: Handle database save, ws event.
+});
+
+/**
+ * Websocket event GET_GROUPS_WITH_USERS_AND_CHANNELS
+ */
+eventBus.onWsEvent('get_groups_with_users_and_channels', (json) => {
+    // TODO: reply to the request.
+});
+
+/**
+ * Websocket event CREATE_DEFAULT_MESSAGE
+ */
+ eventBus.onWsEvent('create_default_message', (json) => {
+    // TODO: make it happen. check ws.js for the json example.
+    // TODO: save to database.
+});
+
+/**
+ * Websocket event CREATE_CUSTOM_MESSAGE
+ */
+ eventBus.onWsEvent('create_custom_message', (json) => {
+    // TODO: make it happen. check ws.js for the json example.
+    // TODO: save to database.
 });
 
 // Connect to Discord.

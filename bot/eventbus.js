@@ -4,7 +4,7 @@ const _ = require('lodash')
 // EventBus class.
 class EventBus extends EventEmitter {
     onDiscordCommandEvent(eventName, callBack) {
-        this.on('discord::' + eventName, callBack);
+        this.on('discord::' + eventName.toLowerCase(), callBack);
     }
 
     releaseDiscordCommandEvent(eventName) {
@@ -15,7 +15,7 @@ class EventBus extends EventEmitter {
         let val = false;
 
         this.eventNames().forEach((ele) => {
-            if (_.isEqual('discord::' + eventName, ele)) {
+            if (_.isEqual('discord::' + eventName.toLowerCase(), ele)) {
                 val = true;
             }
         });
@@ -24,11 +24,11 @@ class EventBus extends EventEmitter {
     }
 
     dispatchDiscordCommandEvent(eventName, args) {
-        this.emit('discord::' + eventName, args);
+        this.emit('discord::' + eventName.toLowerCase(), args);
     }
 
     onWsEvent(eventName, callBack) {
-        this.on('ws::' + eventName, callBack);
+        this.on('ws::' + eventName.toLowerCase(), callBack);
     }
 
     releaseWsEvent(eventName) {
@@ -39,7 +39,7 @@ class EventBus extends EventEmitter {
         let val = false;
 
         this.eventNames().forEach((ele) => {
-            if (_.isEqual('ws::' + eventName, ele)) {
+            if (_.isEqual('ws::' + eventName.toLowerCase(), ele)) {
                 val = true;
             }
         });
@@ -48,7 +48,7 @@ class EventBus extends EventEmitter {
     }
 
     dispatchWsEvent(eventName, args) {
-        this.emit('ws::' + eventName, args);
+        this.emit('ws::' + eventName.toLowerCase(), args);
     }
 }
 

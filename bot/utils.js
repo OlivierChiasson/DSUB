@@ -1,6 +1,6 @@
 const config = require('./config/config');
 const db = require('./db');
-const emoji = require('./emoji');
+const emoji = require('./enum/emoji');
 
 module.exports = utils = {
     // Checks if the message is a discord command.
